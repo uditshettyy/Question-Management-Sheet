@@ -1,19 +1,35 @@
 import { useStore } from "../store/useQuestionStore";
 import SubtopicList from "./SubtopicList";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import SortableTopic from "./SortableTopic";
 
 export default function TopicList() {
   const topics = useStore((s) => s.topics);
-  const deleteTopic = useStore((s) => s.deleteTopic);
+  const reorderTopics = useStore((s) => s.reorderTopics);
 
-  return topics.map((topic) => (
-    <div key={topic.id} className="bg-white rounded-xl shadow p-4 mb-4">
-  <div className="flex justify-between items-center border-b pb-2 mb-2">
-    <h2 className="text-lg font-semibold">{topic.title}</h2>
-    <button className="text-red-500 text-sm">Delete</button>
-  </div>
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
 
-  <SubtopicList topic={topic} />
-</div>
+    const oldIndex = topics.findIndex((t) => t.id === active.id);
+    const newIndex = topics.findIndex((t) => t.id === over.id);
 
-  ));
+    reorderTopics(arrayMove(topics, oldIndex, newIndex));
+  };
+
+  return (
+    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <SortableContext items={topics.map((t) => t.id)} strategy={verticalListSortingStrategy}>
+        {topics.map((topic) => (
+          <SortableTopic key={topic.id} topic={topic} />
+        ))}
+      </SortableContext>
+    </DndContext>
+  );
 }
+

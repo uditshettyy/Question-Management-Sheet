@@ -1,30 +1,60 @@
 import { useState } from "react";
 import { useStore } from "../store/useQuestionStore";
 import QuestionList from "./QuestionList";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
+import SortableSubtopic from "./SortableSubtopic";
 
 export default function SubtopicList({ topic }) {
   const addSubtopic = useStore((s) => s.addSubtopic);
-  const deleteSubtopic = useStore((s) => s.deleteSubtopic);
+  const reorderSubtopics = useStore((s) => s.reorderSubtopics);
   const [title, setTitle] = useState("");
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = topic.subtopics.findIndex((s) => s.id === active.id);
+    const newIndex = topic.subtopics.findIndex((s) => s.id === over.id);
+
+    reorderSubtopics(topic.id, arrayMove(topic.subtopics, oldIndex, newIndex));
+  };
 
   return (
     <div className="ml-4 mt-2">
+      {/* Add Subtopic */}
       <div className="flex gap-2 mb-2">
-        <input value={title} onChange={(e) => setTitle(e.target.value)} className="border p-1 rounded" />
-        <button onClick={() => { addSubtopic(topic.id, title); setTitle(""); }} className="bg-blue-500 text-white px-2 rounded">Add</button>
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          onPointerDown={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
+          className="border p-1 rounded"
+          placeholder="New subtopic"
+        />
+        <button
+          onClick={() => {
+            if (!title) return;
+            addSubtopic(topic.id, title);
+            setTitle("");
+          }}
+          className="bg-blue-500 text-white px-2 rounded"
+        >
+          Add
+        </button>
       </div>
 
-      {topic.subtopics.map((sub) => (
-        <div key={sub.id} className="bg-gray-50 rounded-lg p-3 mb-2">
-  <div className="flex justify-between items-center mb-1">
-    <h3 className="font-medium text-sm">{sub.title}</h3>
-    <button className="text-red-400 text-xs">Delete</button>
-  </div>
-
-  <QuestionList topicId={topic.id} sub={sub} />
-</div>
-
-      ))}
+      {/* Drag Context for Subtopics */}
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext
+          items={topic.subtopics.map((s) => s.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          {topic.subtopics.map((sub) => (
+            <SortableSubtopic key={sub.id} topicId={topic.id} sub={sub} />
+          ))}
+        </SortableContext>
+      </DndContext>
     </div>
   );
 }

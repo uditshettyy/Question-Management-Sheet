@@ -1,38 +1,53 @@
 import { create } from "zustand";
 import { v4 as uuid } from "uuid";
 
+const savedData = JSON.parse(localStorage.getItem("question-manager-data"));
+
+const save = (topics) =>
+  localStorage.setItem("question-manager-data", JSON.stringify(topics));
+
 export const useStore = create((set) => ({
-  topics: [],
+  topics: savedData || [],
 
   addTopic: (title) =>
-    set((state) => ({
-      topics: [...state.topics, { id: uuid(), title, subtopics: [] }],
-    })),
+    set((state) => {
+      const updated = [...state.topics, { id: uuid(), title, subtopics: [] }];
+      save(updated);
+      return { topics: updated };
+    }),
 
   deleteTopic: (id) =>
-    set((state) => ({ topics: state.topics.filter((t) => t.id !== id) })),
+    set((state) => {
+      const updated = state.topics.filter((t) => t.id !== id);
+      save(updated);
+      return { topics: updated };
+    }),
 
   addSubtopic: (topicId, title) =>
-    set((state) => ({
-      topics: state.topics.map((t) =>
+    set((state) => {
+      const updated = state.topics.map((t) =>
         t.id === topicId
           ? { ...t, subtopics: [...t.subtopics, { id: uuid(), title, questions: [] }] }
           : t
-      ),
-    })),
+      );
+      save(updated);
+      return { topics: updated };
+    }),
 
   deleteSubtopic: (topicId, subId) =>
-    set((state) => ({
-      topics: state.topics.map((t) =>
+    set((state) => {
+      const updated = state.topics.map((t) =>
         t.id === topicId
           ? { ...t, subtopics: t.subtopics.filter((s) => s.id !== subId) }
           : t
-      ),
-    })),
+      );
+      save(updated);
+      return { topics: updated };
+    }),
 
   addQuestion: (topicId, subId, text) =>
-    set((state) => ({
-      topics: state.topics.map((t) =>
+    set((state) => {
+      const updated = state.topics.map((t) =>
         t.id === topicId
           ? {
               ...t,
@@ -43,12 +58,14 @@ export const useStore = create((set) => ({
               ),
             }
           : t
-      ),
-    })),
+      );
+      save(updated);
+      return { topics: updated };
+    }),
 
   deleteQuestion: (topicId, subId, qId) =>
-    set((state) => ({
-      topics: state.topics.map((t) =>
+    set((state) => {
+      const updated = state.topics.map((t) =>
         t.id === topicId
           ? {
               ...t,
@@ -59,6 +76,62 @@ export const useStore = create((set) => ({
               ),
             }
           : t
-      ),
-    })),
+      );
+      save(updated);
+      return { topics: updated };
+    }),
+
+  editQuestion: (topicId, subId, qId, newText) =>
+    set((state) => {
+      const updated = state.topics.map((t) =>
+        t.id === topicId
+          ? {
+              ...t,
+              subtopics: t.subtopics.map((s) =>
+                s.id === subId
+                  ? {
+                      ...s,
+                      questions: s.questions.map((q) =>
+                        q.id === qId ? { ...q, text: newText } : q
+                      ),
+                    }
+                  : s
+              ),
+            }
+          : t
+      );
+      save(updated);
+      return { topics: updated };
+    }),
+
+  reorderTopics: (newOrder) =>
+    set(() => {
+      save(newOrder);
+      return { topics: newOrder };
+    }),
+
+  reorderSubtopics: (topicId, newOrder) =>
+    set((state) => {
+      const updated = state.topics.map((t) =>
+        t.id === topicId ? { ...t, subtopics: newOrder } : t
+      );
+      save(updated);
+      return { topics: updated };
+    }),
+
+  reorderQuestions: (topicId, subId, newOrder) =>
+    set((state) => {
+      const updated = state.topics.map((t) =>
+        t.id === topicId
+          ? {
+              ...t,
+              subtopics: t.subtopics.map((s) =>
+                s.id === subId ? { ...s, questions: newOrder } : s
+              ),
+            }
+          : t
+      );
+      save(updated);
+      return { topics: updated };
+    }),
 }));
