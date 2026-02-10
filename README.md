@@ -1,34 +1,71 @@
-📘 Question Management System
+# 📘 Question Management System
 
-A modern React-based Question Organizer that allows users to manage coding topics, subtopics, and questions in an interactive and structured way.
 
-Built as part of a full-stack internship assignment.
+A **modern React-based Question Organizer** designed to manage coding topics, subtopics, and questions in a structured and interactive way.
 
-🚀 Live Demo
+Built as part of a full-stack internship assignment, this project demonstrates **state management, dynamic UI rendering, and drag-and-drop architecture** in a scalable way.
 
-(Add your Vercel link here after deployment)
+---
 
-✨ Features
+## 🚀 Live Demo
 
-✔ Add / Edit / Delete Topics
-✔ Add / Edit / Delete Subtopics
-✔ Add / Edit / Delete Questions
-✔ Drag & Drop Reordering
-✔ Collapsible Topic Sections
-✔ Dark Mode 🌙
-✔ Loading Screen
-✔ Local Dataset Integration
-✔ Clean Responsive UI
-✔ State persistence using Zustand
+🔗 https://question-management-sheet-xi.vercel.app/
 
-🛠 Tech Stack
-Technology	Purpose
-React (Vite)	Frontend Framework
-Tailwind CSS	UI Styling
-Zustand	State Management
-dnd-kit	Drag & Drop
-Vercel	Deployment
-📂 Project Structure
+---
+
+## ✨ Key Features
+
+| Feature                 | Description                            |
+| ----------------------- | -------------------------------------- |
+| 🧠 Topic Management     | Add, edit, and delete coding topics    |
+| 🗂 Subtopic Structure   | Organize learning paths clearly        |
+| ❓ Question Handling     | Manage coding questions efficiently    |
+| 🔄 Drag & Drop          | Smooth reordering using dnd-kit        |
+| 📂 Collapsible Sections | Expand/Collapse topic trees            |
+| 🌙 Dark Mode            | Modern developer-friendly UI           |
+| ⏳ Loading Screen        | Better user experience                 |
+| 💾 State Persistence    | Powered by Zustand                     |
+| 📱 Responsive Design    | Works across devices                   |
+| 📊 Local Dataset        | Structured sheet-based data conversion |
+
+---
+
+## 🛠 Tech Stack
+
+| Technology       | Role                    |
+| ---------------- | ----------------------- |
+| **React (Vite)** | Frontend Framework      |
+| **Tailwind CSS** | Styling                 |
+| **Zustand**      | Global State Management |
+| **dnd-kit**      | Drag & Drop System      |
+| **Vercel**       | Deployment              |
+
+---
+
+## 🧩 System Architecture
+
+```text
+Topic
+ ├── Subtopic
+ │     ├── Question
+ │     ├── Question
+ │
+ ├── Subtopic
+       ├── Question
+```
+
+Each level supports:
+
+✔ CRUD Operations
+✔ Dynamic Reordering
+✔ Expand/Collapse UI
+✔ Global State Sync
+
+---
+
+## 📂 Project Structure
+
+```
 src/
 │
 ├── components/
@@ -48,63 +85,72 @@ src/
 │   └── sheet.json
 │
 └── App.jsx
+```
 
-🧠 How It Works
+---
 
-The system converts a structured dataset into:
+## 🧠 How It Works
 
-Topic → Subtopic → Questions
+The app converts structured sheet data into a **hierarchical tree**:
 
+**Topic → Subtopic → Questions**
 
-Each level supports:
+Zustand handles centralized state while **dnd-kit** manages drag-drop operations without performance lag.
 
-CRUD operations
+---
 
-Reordering
+## 🧩 Installation
 
-Expand/Collapse UI
-
-State is managed globally via Zustand.
-
-🧩 Installation
+```bash
 git clone https://github.com/YOUR_USERNAME/question-manager.git
 cd question-manager
 npm install
 npm run dev
+```
 
-📦 Build
+---
+
+## 📦 Build
+
+```bash
 npm run build
+```
 
-🌍 Deployment
+---
 
-Deployed using Vercel
-🎯 Assignment Coverage
-Requirement	Status
-Add Topic	✅
-Add Subtopic	✅
-Add Question	✅
-Edit/Delete	✅
-Reorder (Drag & Drop)	✅
-State Management	✅
-API / Dataset Integration	✅
-Responsive UI	✅
-📸 UI Preview
+## 🌍 Deployment
 
-(Add screenshots later if you want)
+Hosted on **Vercel** for fast and scalable delivery.
 
-💡 Future Improvements
+---
 
-Backend storage
+## 🎯 Assignment Requirements Coverage
 
-User authentication
+| Requirement            | Status |
+| ---------------------- | ------ |
+| Add Topic              | ✅      |
+| Add Subtopic           | ✅      |
+| Add Question           | ✅      |
+| Edit/Delete            | ✅      |
+| Drag & Drop Reordering | ✅      |
+| State Management       | ✅      |
+| Dataset Integration    | ✅      |
+| Responsive UI          | ✅      |
 
-Shareable lists
+---
 
-Search & filtering
+## 💡 Future Improvements
 
-Mobile-first enhancements
+🔐 Backend Database
+👤 User Authentication
+🔗 Shareable Lists
+🔍 Search & Filtering
+📱 Mobile-First Enhancements
 
-👨‍💻 Author
+---
 
-Udit Shetty
+## 👨‍💻 Author
+
+**Udit Shetty**
 Aspiring Developer 🚀
+
