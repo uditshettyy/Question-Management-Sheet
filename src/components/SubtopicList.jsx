@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useStore } from "../store/useQuestionStore";
-import QuestionList from "./QuestionList";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
 import SortableSubtopic from "./SortableSubtopic";
@@ -21,15 +20,16 @@ export default function SubtopicList({ topic }) {
   };
 
   return (
-    <div className="ml-4 mt-2">
-      {/* Add Subtopic */}
-      <div className="flex gap-2 mb-2">
+    <div className="ml-2">
+
+      {/* ADD SUBTOPIC */}
+      <div className="flex gap-2 mb-4">
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           onPointerDown={(e) => e.stopPropagation()}
           onKeyDown={(e) => e.stopPropagation()}
-          className="border p-1 rounded"
+          className="border border-gray-300 px-2 py-1 rounded-md text-sm w-full"
           placeholder="New subtopic"
         />
         <button
@@ -38,13 +38,13 @@ export default function SubtopicList({ topic }) {
             addSubtopic(topic.id, title);
             setTitle("");
           }}
-          className="bg-blue-500 text-white px-2 rounded"
+          className="px-4 py-1 bg-orange-600 text-white rounded-md text-sm hover:bg-orange-700"
         >
           Add
         </button>
       </div>
 
-      {/* Drag Context for Subtopics */}
+      {/* DRAG SUBTOPICS */}
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext
           items={topic.subtopics.map((s) => s.id)}

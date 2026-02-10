@@ -37,7 +37,7 @@ export default function QuestionList({ topicId, sub }) {
             addQuestion(topicId, sub.id, text);
             setText("");
           }}
-          className="bg-green-500 text-white px-2 rounded text-sm"
+          className="bg-orange-500 text-white px-2 rounded text-sm"
         >
           Add
         </button>

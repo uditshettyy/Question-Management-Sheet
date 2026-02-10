@@ -1,13 +1,19 @@
 import { create } from "zustand";
 import { v4 as uuid } from "uuid";
 
-const savedData = JSON.parse(localStorage.getItem("question-manager-data"));
+const savedData = JSON.parse(localStorage.getItem("question-manager-data")) || [];
 
 const save = (topics) =>
   localStorage.setItem("question-manager-data", JSON.stringify(topics));
 
 export const useStore = create((set) => ({
-  topics: savedData || [],
+  topics: savedData,
+
+  setTopicsFromAPI: (topics) =>
+    set(() => {
+      save(topics);
+      return { topics };
+    }),
 
   addTopic: (title) =>
     set((state) => {
@@ -19,6 +25,15 @@ export const useStore = create((set) => ({
   deleteTopic: (id) =>
     set((state) => {
       const updated = state.topics.filter((t) => t.id !== id);
+      save(updated);
+      return { topics: updated };
+    }),
+
+  editTopic: (id, newTitle) =>
+    set((state) => {
+      const updated = state.topics.map((t) =>
+        t.id === id ? { ...t, title: newTitle } : t
+      );
       save(updated);
       return { topics: updated };
     }),
@@ -39,6 +54,22 @@ export const useStore = create((set) => ({
       const updated = state.topics.map((t) =>
         t.id === topicId
           ? { ...t, subtopics: t.subtopics.filter((s) => s.id !== subId) }
+          : t
+      );
+      save(updated);
+      return { topics: updated };
+    }),
+
+  editSubtopic: (topicId, subId, newTitle) =>
+    set((state) => {
+      const updated = state.topics.map((t) =>
+        t.id === topicId
+          ? {
+              ...t,
+              subtopics: t.subtopics.map((s) =>
+                s.id === subId ? { ...s, title: newTitle } : s
+              ),
+            }
           : t
       );
       save(updated);

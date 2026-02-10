@@ -17,8 +17,9 @@ export default function SortableQuestion({ topicId, subId, q }) {
     <li
       ref={setNodeRef}
       style={style}
-      className="flex justify-between items-center bg-white px-3 py-2 rounded-lg shadow-sm text-sm hover:bg-gray-100 transition"
+      className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-lg border text-sm"
     >
+      {/* LEFT (DRAG + TITLE) */}
       <div className="flex items-center gap-3 cursor-grab" {...attributes} {...listeners}>
         {editing ? (
           <input
@@ -29,20 +30,30 @@ export default function SortableQuestion({ topicId, subId, q }) {
               setEditing(false);
             }}
             onPointerDown={(e) => e.stopPropagation()}
-            className="border p-1 rounded text-sm"
+            className="border border-blue-400 bg-white px-2 py-1 rounded text-sm"
             autoFocus
           />
         ) : (
-          <span onDoubleClick={() => setEditing(true)}>{q.text}</span>
+          <span>{q.text}</span>
         )}
       </div>
 
-      <button
-        onClick={() => deleteQuestion(topicId, subId, q.id)}
-        className="text-red-500 text-xs"
-      >
-        Delete
-      </button>
+      {/* RIGHT BUTTONS */}
+      <div className="flex gap-2">
+        <button
+          onClick={() => setEditing(true)}
+          className="px-2 py-1 border rounded-md text-orange-600 text-xs hover:bg-blue-50"
+        >
+          Edit
+        </button>
+
+        <button
+          onClick={() => deleteQuestion(topicId, subId, q.id)}
+          className="px-2 py-1 border rounded-md text-orange-600 text-xs hover:bg-red-50"
+        >
+          Delete
+        </button>
+      </div>
     </li>
   );
 }

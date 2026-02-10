@@ -1,16 +1,110 @@
-# React + Vite
+📘 Question Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based Question Organizer that allows users to manage coding topics, subtopics, and questions in an interactive and structured way.
 
-Currently, two official plugins are available:
+Built as part of a full-stack internship assignment.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🚀 Live Demo
 
-## React Compiler
+(Add your Vercel link here after deployment)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+✨ Features
 
-## Expanding the ESLint configuration
+✔ Add / Edit / Delete Topics
+✔ Add / Edit / Delete Subtopics
+✔ Add / Edit / Delete Questions
+✔ Drag & Drop Reordering
+✔ Collapsible Topic Sections
+✔ Dark Mode 🌙
+✔ Loading Screen
+✔ Local Dataset Integration
+✔ Clean Responsive UI
+✔ State persistence using Zustand
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🛠 Tech Stack
+Technology	Purpose
+React (Vite)	Frontend Framework
+Tailwind CSS	UI Styling
+Zustand	State Management
+dnd-kit	Drag & Drop
+Vercel	Deployment
+📂 Project Structure
+src/
+│
+├── components/
+│   ├── TopicList.jsx
+│   ├── SortableTopic.jsx
+│   ├── SortableSubtopic.jsx
+│   ├── SortableQuestion.jsx
+│   ├── Loader.jsx
+│
+├── store/
+│   └── useQuestionStore.js
+│
+├── utils/
+│   └── convertSheetData.js
+│
+├── data/
+│   └── sheet.json
+│
+└── App.jsx
+
+🧠 How It Works
+
+The system converts a structured dataset into:
+
+Topic → Subtopic → Questions
+
+
+Each level supports:
+
+CRUD operations
+
+Reordering
+
+Expand/Collapse UI
+
+State is managed globally via Zustand.
+
+🧩 Installation
+git clone https://github.com/YOUR_USERNAME/question-manager.git
+cd question-manager
+npm install
+npm run dev
+
+📦 Build
+npm run build
+
+🌍 Deployment
+
+Deployed using Vercel
+🎯 Assignment Coverage
+Requirement	Status
+Add Topic	✅
+Add Subtopic	✅
+Add Question	✅
+Edit/Delete	✅
+Reorder (Drag & Drop)	✅
+State Management	✅
+API / Dataset Integration	✅
+Responsive UI	✅
+📸 UI Preview
+
+(Add screenshots later if you want)
+
+💡 Future Improvements
+
+Backend storage
+
+User authentication
+
+Shareable lists
+
+Search & filtering
+
+Mobile-first enhancements
+
+👨‍💻 Author
+
+Udit Shetty
+Aspiring Developer 🚀
