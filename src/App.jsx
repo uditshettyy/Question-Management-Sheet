@@ -9,13 +9,11 @@ function App() {
   const addTopic = useStore((s) => s.addTopic);
   const setTopicsFromAPI = useStore((s) => s.setTopicsFromAPI);
 
-  // 🌙 Dark mode state (saved)
   const [dark, setDark] = useState(localStorage.getItem("theme") === "dark");
 
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // 🔥 Apply dark mode to entire app
   useEffect(() => {
     if (dark) {
       document.documentElement.classList.add("dark");
@@ -26,16 +24,19 @@ function App() {
     }
   }, [dark]);
 
-  // 🔥 Load dataset once
   useEffect(() => {
-    try {
-      const converted = convertSheetToTopics(sheetData);
-      setTopicsFromAPI(converted);
-    } catch (err) {
-      console.error("Data load failed:", err);
-    } finally {
-      setTimeout(() => setLoading(false), 800);
+    const existing = localStorage.getItem("question-manager-data");
+
+    if (!existing) {
+      try {
+        const converted = convertSheetToTopics(sheetData);
+        setTopicsFromAPI(converted);
+      } catch (err) {
+        console.error("Data load failed:", err);
+      }
     }
+
+    setTimeout(() => setLoading(false), 800);
   }, [setTopicsFromAPI]);
 
   if (loading) return <Loader />;
@@ -69,17 +70,17 @@ function App() {
               </svg>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-orange-600 via-dark-500 to-orange-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-orange-600 to-orange-600 bg-clip-text text-transparent">
               Question Management System
             </h1>
 
             <p className="text-sm md:text-base text-orange-500 dark:text-gray-400 mt-3 max-w-xl">
+              Organize topics, subtopics, and coding questions — all in one place.
             </p>
 
           </div>
         </div>
 
-        {/* ADD TOPIC */}
         <div className="flex gap-3 mb-8">
           <input
             value={title}

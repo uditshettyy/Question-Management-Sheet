@@ -19,7 +19,6 @@ export default function SortableQuestion({ topicId, subId, q }) {
       style={style}
       className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-lg border text-sm"
     >
-      {/* LEFT (DRAG + TITLE) */}
       <div className="flex items-center gap-3 cursor-grab" {...attributes} {...listeners}>
         {editing ? (
           <input
@@ -38,7 +37,6 @@ export default function SortableQuestion({ topicId, subId, q }) {
         )}
       </div>
 
-      {/* RIGHT BUTTONS */}
       <div className="flex gap-2">
         <button
           onClick={() => setEditing(true)}

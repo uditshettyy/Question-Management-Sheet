@@ -26,7 +26,6 @@ export default function SortableSubtopic({ topicId, sub }) {
       style={style}
       className="bg-white border rounded-xl p-4 mb-4 shadow-sm hover:shadow-md transition"
     >
-      {/* SUBTOPIC HEADER */}
       <div
         className="flex justify-between items-center cursor-pointer mb-2"
         onClick={() => setOpen(!open)}
@@ -63,7 +62,6 @@ export default function SortableSubtopic({ topicId, sub }) {
           </span>
         </div>
 
-        {/* ACTION BUTTONS */}
         <div className="flex gap-2">
           <button
             onClick={(e) => {
@@ -87,7 +85,6 @@ export default function SortableSubtopic({ topicId, sub }) {
         </div>
       </div>
 
-      {/* QUESTIONS DROPDOWN */}
       {open && <QuestionList topicId={topicId} sub={sub} />}
     </div>
   );

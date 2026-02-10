@@ -1,13 +1,20 @@
 import { create } from "zustand";
 import { v4 as uuid } from "uuid";
 
-const savedData = JSON.parse(localStorage.getItem("question-manager-data")) || [];
+const load = () => {
+  try {
+    const data = localStorage.getItem("question-manager-data");
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+};
 
 const save = (topics) =>
   localStorage.setItem("question-manager-data", JSON.stringify(topics));
 
 export const useStore = create((set) => ({
-  topics: savedData,
+  topics: load(),
 
   setTopicsFromAPI: (topics) =>
     set(() => {
@@ -36,6 +43,12 @@ export const useStore = create((set) => ({
       );
       save(updated);
       return { topics: updated };
+    }),
+
+  reorderTopics: (newOrder) =>
+    set(() => {
+      save(newOrder);
+      return { topics: newOrder };
     }),
 
   addSubtopic: (topicId, title) =>
@@ -71,6 +84,15 @@ export const useStore = create((set) => ({
               ),
             }
           : t
+      );
+      save(updated);
+      return { topics: updated };
+    }),
+
+  reorderSubtopics: (topicId, newOrder) =>
+    set((state) => {
+      const updated = state.topics.map((t) =>
+        t.id === topicId ? { ...t, subtopics: newOrder } : t
       );
       save(updated);
       return { topics: updated };
@@ -130,21 +152,6 @@ export const useStore = create((set) => ({
               ),
             }
           : t
-      );
-      save(updated);
-      return { topics: updated };
-    }),
-
-  reorderTopics: (newOrder) =>
-    set(() => {
-      save(newOrder);
-      return { topics: newOrder };
-    }),
-
-  reorderSubtopics: (topicId, newOrder) =>
-    set((state) => {
-      const updated = state.topics.map((t) =>
-        t.id === topicId ? { ...t, subtopics: newOrder } : t
       );
       save(updated);
       return { topics: updated };

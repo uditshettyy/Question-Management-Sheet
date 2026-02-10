@@ -22,7 +22,6 @@ export default function SubtopicList({ topic }) {
   return (
     <div className="ml-2">
 
-      {/* ADD SUBTOPIC */}
       <div className="flex gap-2 mb-4">
         <input
           value={title}
@@ -44,7 +43,6 @@ export default function SubtopicList({ topic }) {
         </button>
       </div>
 
-      {/* DRAG SUBTOPICS */}
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext
           items={topic.subtopics.map((s) => s.id)}

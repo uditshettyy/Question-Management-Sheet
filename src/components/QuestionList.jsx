@@ -21,7 +21,6 @@ export default function QuestionList({ topicId, sub }) {
 
   return (
     <div className="ml-4 mt-3 space-y-2">
-      {/* Add Question */}
       <div className="flex gap-2 mb-1">
         <input
           value={text}
@@ -43,7 +42,6 @@ export default function QuestionList({ topicId, sub }) {
         </button>
       </div>
 
-      {/* Drag Context for Questions */}
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext
           items={sub.questions.map((q) => q.id)}

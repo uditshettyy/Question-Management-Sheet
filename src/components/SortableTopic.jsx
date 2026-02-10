@@ -26,7 +26,6 @@ export default function SortableTopic({ topic }) {
       style={style}
       className="bg-gray-50 border rounded-xl p-5 mb-5 shadow-sm"
     >
-      {/* HEADER */}
       <div
         className="flex justify-between items-center border-b pb-2 mb-3 cursor-pointer"
         onClick={() => setOpen(!open)}
@@ -63,7 +62,6 @@ export default function SortableTopic({ topic }) {
           </span>
         </div>
 
-        {/* ACTION BUTTONS */}
         <div className="flex gap-2">
           <button
             onClick={(e) => {
@@ -87,7 +85,6 @@ export default function SortableTopic({ topic }) {
         </div>
       </div>
 
-      {/* SUBTOPICS */}
       {open && <SubtopicList topic={topic} />}
     </div>
   );
